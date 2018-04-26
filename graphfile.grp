@@ -1,0 +1,33 @@
+FILETYPE: USERDEFINED
+VERSION: 1.0
+DATA:
+GRAPHNAME: G_0001
+VERTICES:
+a
+b
+c
+d
+e
+f
+g
+h
+i
+j
+k
+l
+EDGES:
+a b e0
+a h e1
+a g e2
+h i e3
+b i e4
+b c e5
+b e e6
+i c e7
+c d e8
+i e e9
+f e e10
+g f e11
+i g e12
+i f e13
+j k e14

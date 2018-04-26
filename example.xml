@@ -1,0 +1,25 @@
+<graph name=graph>
+	<vertex name=v1></vertex>
+	<vertex name=v2></vertex>
+	<vertex name=v3></vertex>
+	<vertex name=v4></vertex>
+	<vertex name=v5></vertex>
+	<vertex name=v6></vertex>
+	<vertex name=v7></vertex>
+	<vertex name=v8></vertex>
+	<vertex name=v9></vertex>
+	<vertex name=v10></vertex>
+	<edge name=e1 vertex1=v1 vertex2=v2></edge>
+	<edge name=e2 vertex1=v1 vertex2=v3></edge>
+	<edge name=e3 vertex1=v1 vertex2=v4></edge>
+	<edge name=e4 vertex1=v1 vertex2=v5></edge>
+	<edge name=e5 vertex1=v3 vertex2=v2></edge>
+	<edge name=e6 vertex1=v3 vertex2=v4></edge>
+	<edge name=e7 vertex1=v3 vertex2=v6></edge>
+	<edge name=e8 vertex1=v5 vertex2=v7></edge>
+	<edge name=e9 vertex1=v5 vertex2=v8></edge>
+	<edge name=e10 vertex1=v6 vertex2=v9></edge>
+	<vertex name=v1></vertex>
+	<vertex name=v12></vertex>
+	<vertex name=v13></vertex>
+</graph>

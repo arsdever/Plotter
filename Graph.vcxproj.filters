@@ -1,0 +1,177 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Commands">
+      <UniqueIdentifier>{cbb91298-84ba-4b76-8872-843ca7d34e33}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graph">
+      <UniqueIdentifier>{8827dfa0-6419-4b59-886d-f06d54322ed7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Commands\cmd_graph">
+      <UniqueIdentifier>{ab639a65-c44f-4d5a-b275-47d275cf990b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Commands\basic">
+      <UniqueIdentifier>{955f1f5f-ac28-4b4e-bc56-afdb38d95b6c}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="cresult.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="itype.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cgraph.h">
+      <Filter>Graph</Filter>
+    </ClInclude>
+    <ClInclude Include="cmd_include.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cmd_graph\cmd_graph.h">
+      <Filter>Commands\cmd_graph</Filter>
+    </ClInclude>
+    <ClInclude Include="cmd_graph\cmd_graph_delete.h">
+      <Filter>Commands\cmd_graph</Filter>
+    </ClInclude>
+    <ClInclude Include="cmd_graph\cmd_graph_find.h">
+      <Filter>Commands\cmd_graph</Filter>
+    </ClInclude>
+    <ClInclude Include="cmd_graph\cmd_graph_new.h">
+      <Filter>Commands\cmd_graph</Filter>
+    </ClInclude>
+    <ClInclude Include="cmd_graph\cmd_graph_print.h">
+      <Filter>Commands\cmd_graph</Filter>
+    </ClInclude>
+    <ClInclude Include="cmd_graph\cmd_graph_set.h">
+      <Filter>Commands\cmd_graph</Filter>
+    </ClInclude>
+    <ClInclude Include="cmd_graph\cmd_include.h">
+      <Filter>Commands\cmd_graph</Filter>
+    </ClInclude>
+    <ClInclude Include="cmd_basic\cmd_exit.h">
+      <Filter>Commands\basic</Filter>
+    </ClInclude>
+    <ClInclude Include="cmd_basic\cmd_find.h">
+      <Filter>Commands\basic</Filter>
+    </ClInclude>
+    <ClInclude Include="cmd_basic\cmd_help.h">
+      <Filter>Commands\basic</Filter>
+    </ClInclude>
+    <ClInclude Include="cmd_basic\cmd_include.h">
+      <Filter>Commands\basic</Filter>
+    </ClInclude>
+    <ClInclude Include="cmd_basic\cmd_new.h">
+      <Filter>Commands\basic</Filter>
+    </ClInclude>
+    <ClInclude Include="cmd_basic\cmd_print.h">
+      <Filter>Commands\basic</Filter>
+    </ClInclude>
+    <ClInclude Include="cmd_basic\cmd_save.h">
+      <Filter>Commands\basic</Filter>
+    </ClInclude>
+    <ClInclude Include="cmd_basic\cmd_delete.h">
+      <Filter>Commands\basic</Filter>
+    </ClInclude>
+    <ClInclude Include="ccommand.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cmd_basic\cmd_load.h">
+      <Filter>Commands\basic</Filter>
+    </ClInclude>
+    <ClInclude Include="cstring.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cxmltree.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cexcept.h">
+      <Filter>Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="cstring_inline.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ctree.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ctree_impl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="cresult.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="itype.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="cgraph.cpp">
+      <Filter>Graph</Filter>
+    </ClCompile>
+    <ClCompile Include="cmd_graph\cmd_graph_delete.cpp">
+      <Filter>Commands\cmd_graph</Filter>
+    </ClCompile>
+    <ClCompile Include="cmd_graph\cmd_graph_new.cpp">
+      <Filter>Commands\cmd_graph</Filter>
+    </ClCompile>
+    <ClCompile Include="cmd_graph\cmd_graph_print.cpp">
+      <Filter>Commands\cmd_graph</Filter>
+    </ClCompile>
+    <ClCompile Include="cmd_graph\cmd_graph_set.cpp">
+      <Filter>Commands\cmd_graph</Filter>
+    </ClCompile>
+    <ClCompile Include="cmd_basic\cmd_find.cpp">
+      <Filter>Commands\basic</Filter>
+    </ClCompile>
+    <ClCompile Include="cmd_basic\cmd_help.cpp">
+      <Filter>Commands\basic</Filter>
+    </ClCompile>
+    <ClCompile Include="cmd_basic\cmd_new.cpp">
+      <Filter>Commands\basic</Filter>
+    </ClCompile>
+    <ClCompile Include="cmd_basic\cmd_print.cpp">
+      <Filter>Commands\basic</Filter>
+    </ClCompile>
+    <ClCompile Include="cmd_basic\cmd_save.cpp">
+      <Filter>Commands\basic</Filter>
+    </ClCompile>
+    <ClCompile Include="cmd_basic\cmd_delete.cpp">
+      <Filter>Commands\basic</Filter>
+    </ClCompile>
+    <ClCompile Include="cmd_basic\cmd_exit.cpp">
+      <Filter>Commands\basic</Filter>
+    </ClCompile>
+    <ClCompile Include="cmd_graph\cmd_graph_find.cpp">
+      <Filter>Commands\cmd_graph</Filter>
+    </ClCompile>
+    <ClCompile Include="ccommand.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="cmd_basic\cmd_load.cpp">
+      <Filter>Commands\basic</Filter>
+    </ClCompile>
+    <ClCompile Include="cstring.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="cxmltree.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="cexcept.cpp">
+      <Filter>Commands</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
