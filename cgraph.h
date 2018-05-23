@@ -1,3 +1,16 @@
+/********************************************************************************/
+/*																				*/
+/*  This file is part of source codes of program Graph.							*/
+/*  Program was developed as an course work of subject "Graph theory".			*/
+/*																				*/
+/*	Contacts:																	*/
+/*		E-mail:	arsen.gharagyozyn.96@gmail.com									*/
+/*		Phone:	+374 77 006 861													*/
+/*																				*/
+/*  Copyright Arsen Gharagyozyan © 2018 Armenia, Yerevan						*/
+/*																				*/
+/********************************************************************************/
+
 #ifndef CGRAPH_H
 #define CGRAPH_H
 
@@ -59,6 +72,7 @@ public:
 
 	CResult SetDepth(unsigned nValue);
 	inline unsigned GetDepth() const { return m_nValue; }
+	inline CVertex* GetVertex() const { return m_pVertex; }
 
 	bool operator ==(CVertex *pRef) const;
 	bool operator ==(CVertexWrapper const& pRef) const;
@@ -126,10 +140,13 @@ public:
 	// Convert to string
 	std::string ToString() const;
 
+
 	// Serialization
 	friend std::istream& operator >> (std::istream &strmInputStream, CVertexList &lVertexList);
 	// Deserialization
 	friend OStream& operator << (OStream &strmOutputStream, CVertexList const& lVertexList);
+	// Contacenator
+	friend void Concate(CVertexList & lDest, CVertexList const & lSource, bool bRemove);
 };
 
 class CWrappedVertexList : public std::list<CVertexWrapper>
@@ -139,6 +156,7 @@ public:
 
 	int indexOf(CVertex *pVertex);
 	CVertexWrapper& operator [](unsigned nIndex);
+	inline CVertexWrapper& operator [](CVertex *pVertex) { return (*this)[indexOf(pVertex)]; }
 };
 
 class CEdgeList : public EdgePtrList
@@ -224,7 +242,7 @@ public:
 	// Find first path form begin vertex to end vertex
 	CVertexList* FindPath(CWrappedVertexList *pWrappers, CVertex *pVertexBegin, CVertex *pVertexEnd, int nDepth = 0) const;
 	// Find shortest path form begin vertex to end vertex
-	CVertexList* FindSPath(CWrappedVertexList *pWrappers, CVertex *pVertexBegin, CVertex *pVertexEnd, int nDepth = 0) const;
+	CVertexList* FindSPath(CVertex *pVertexBegin, CVertex *pVertexEnd) const;
 	// Find vertex
 	CResult FindVertex(CVertex *pVertex) const;
 	// Find vertex by name
@@ -254,6 +272,10 @@ public:
 
 	// Convert to string
 	std::string ToString() const;
+
+private:
+	void Valualize(CWrappedVertexList * pWrapper, CVertex * pSource, CVertex * pTarget) const;
+	CVertexList * FindSource(CWrappedVertexList * pWrapper, CVertex * pSource, CVertex * pTarget) const;
 
 public:
 	// Checks if graph vertex exist

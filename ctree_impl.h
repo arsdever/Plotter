@@ -1,3 +1,16 @@
+/********************************************************************************/
+/*																				*/
+/*  This file is part of source codes of program Graph.							*/
+/*  Program was developed as an course work of subject "Graph theory".			*/
+/*																				*/
+/*	Contacts:																	*/
+/*		E-mail:	arsen.gharagyozyn.96@gmail.com									*/
+/*		Phone:	+374 77 006 861													*/
+/*																				*/
+/*  Copyright Arsen Gharagyozyan © 2018 Armenia, Yerevan						*/
+/*																				*/
+/********************************************************************************/
+
 #include "ctree.h"
 #define FIND_BY_ARG(ARG, LIST)																\
 	for (auto i : LIST)																		\
@@ -16,7 +29,7 @@
 	return nullptr
 
 #define FIND_IT(WHAT, WHERE, TYPE, NAME)													\
-	std::list< TYPE >::const_iterator NAME = WHERE.cbegin();								\
+	typename std::list< TYPE >::const_iterator NAME = WHERE.cbegin();						\
 	for (; NAME != WHERE.cend(); ++NAME)													\
 	{																						\
 		if ((*NAME) == WHAT)																\
@@ -116,7 +129,7 @@ template<typename T>
 CResult CTree<T>::RemoveNode(CTree<T>* pNode)
 {
 	CTree<T> *pParent = pNode->GetParent();
-	std::list<CTree<T> *>::const_iterator it = pNode->m_lChildren.cbegin();
+	typename std::list<CTree<T> *>::const_iterator it = pNode->m_lChildren.cbegin();
 	for (; it != pNode->m_lChildren.cend(); ++it)
 	{
 		pParent->AddChild((*it));
@@ -308,3 +321,4 @@ T CTree<T>::GetValue() const
 
 #undef FIND_BY_VALUE
 #undef FIND_BY_ARG
+#undef FIND_IT

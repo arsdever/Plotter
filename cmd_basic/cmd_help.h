@@ -1,3 +1,16 @@
+/********************************************************************************/
+/*																				*/
+/*  This file is part of source codes of program Graph.							*/
+/*  Program was developed as an course work of subject "Graph theory".			*/
+/*																				*/
+/*	Contacts:																	*/
+/*		E-mail:	arsen.gharagyozyn.96@gmail.com									*/
+/*		Phone:	+374 77 006 861													*/
+/*																				*/
+/*  Copyright Arsen Gharagyozyan © 2018 Armenia, Yerevan						*/
+/*																				*/
+/********************************************************************************/
+
 #ifndef CMD_HELP_H
 #define CMD_HELP_H
 
@@ -6,7 +19,7 @@
 
 typedef std::map<std::string, std::string> THelpAssistant;
 
-// Help assistants /////////////////////////////////////////////////////////////////////////////////////////////////////
+// -----  Help assistants  ------------------------------------------------------------------------------------------ //
 
 const THelpAssistant g_ha_CMD =
 {
@@ -53,11 +66,6 @@ const THelpAssistant g_ha_CMDHelp =
 {
 	{ "help"									, "Show command list." },
 	{ "help [command]"							, "Show help about specific [command]."}
-};
-
-const THelpAssistant g_ha_CMDSave
-{
-
 };
 
 class CCMDHelp : public ICommand

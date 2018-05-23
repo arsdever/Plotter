@@ -1,3 +1,16 @@
+/********************************************************************************/
+/*																				*/
+/*  This file is part of source codes of program Graph.							*/
+/*  Program was developed as an course work of subject "Graph theory".			*/
+/*																				*/
+/*	Contacts:																	*/
+/*		E-mail:	arsen.gharagyozyn.96@gmail.com									*/
+/*		Phone:	+374 77 006 861													*/
+/*																				*/
+/*  Copyright Arsen Gharagyozyan © 2018 Armenia, Yerevan						*/
+/*																				*/
+/********************************************************************************/
+
 #include "cmd_graph_find.h"
 
 CCMDFindVertex::CCMDFindVertex(ICommand *pParent, std::string strIName)
@@ -161,6 +174,23 @@ CResult CCMDFindPath::Execute(IType *& pObject)
 	CWrappedVertexList *pWrappers = new CWrappedVertexList(pGraph->GetVertexList());
 	CVertexList *pPath = pGraph->FindPath(pWrappers, pVertex1, pVertex2, 0);
 
+	Argument arg;
+
+	while ((arg = GetArgument()) != "")
+	{
+		CVertex *pVertex = pGraph->FindVertex(arg);
+		CVertexList *pNewPath;
+
+		if (pVertex == nullptr || (pNewPath = pGraph->FindPath(pWrappers, pVertex2, pVertex, 0)) == nullptr)
+		{
+			delete pPath;
+			break;
+		}
+
+		pVertex2 = pVertex;
+		Concate(*pPath, *pNewPath, true);
+	}
+
 	if (pPath == nullptr)
 	{
 		outputStream << "Path not found." << std::endl;
@@ -168,8 +198,10 @@ CResult CCMDFindPath::Execute(IType *& pObject)
 		delete pWrappers;
 		return CResult::Fail;
 	}
+
 	delete pWrappers;
 	outputStream << CString("Path found.%").Arg(pPath->ToString());
+	delete pPath;
 
 	return CResult::Success;
 }
@@ -217,19 +249,33 @@ CResult CCMDFindSPath::Execute(IType *& pObject)
 		return CResult::Fail;
 	}
 
-	CWrappedVertexList *pWrappers = new CWrappedVertexList(pGraph->GetVertexList());
-	CVertexList *pPath = pGraph->FindSPath(pWrappers, pVertex1, pVertex2, 0);
+	CVertexList *pPath = pGraph->FindSPath(pVertex1, pVertex2);
+
+	Argument arg;
+
+	while ((arg = GetArgument()) != "")
+	{
+		CVertex *pVertex = pGraph->FindVertex(arg);
+		CVertexList *pNewPath;
+
+		if (pVertex == nullptr || (pNewPath = pGraph->FindSPath(pVertex2, pVertex)) == nullptr)
+		{
+			delete pPath;
+			break;
+		}
+
+		pVertex2 = pVertex;
+		Concate(*pPath, *pNewPath, true);
+	}
 
 	if (pPath == nullptr)
 	{
 		outputStream << "Path not found." << std::endl;
-
-		delete pWrappers;
 		return CResult::Fail;
 	}
 
-	delete pWrappers;
 	outputStream << CString("Path found.%").Arg(pPath->ToString()) << std::endl;
+	delete pPath;
 
 	return CResult::Success;
 }

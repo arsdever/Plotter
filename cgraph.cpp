@@ -1,8 +1,22 @@
+/********************************************************************************/
+/*																				*/
+/*  This file is part of source codes of program Graph.							*/
+/*  Program was developed as an course work of subject "Graph theory".			*/
+/*																				*/
+/*	Contacts:																	*/
+/*		E-mail:	arsen.gharagyozyn.96@gmail.com									*/
+/*		Phone:	+374 77 006 861													*/
+/*																				*/
+/*  Copyright Arsen Gharagyozyan © 2018 Armenia, Yerevan						*/
+/*																				*/
+/********************************************************************************/
+
 #include "cgraph.h"
 #include "cxmltree.h"
 #include "cexcept.h"
 
 #include <map>
+#include <queue>
 #include <fstream>
 #include <sstream>
 
@@ -11,7 +25,6 @@
 #endif
 
 const std::string VertexNotFound = "Vertex not found.";
-
 const std::string CGraph::SSignature::s_strFileTypeGraph = "GRAPH";
 const std::string CGraph::SSignature::s_strFileTypeCommand = "COMMAND";
 const std::string CGraph::SSignature::s_strFileTypeUserDef = "USERDEFINED";
@@ -264,7 +277,7 @@ CVertexList* CGraph::FindPath(CWrappedVertexList *pWrappers, CVertex *pVertexBeg
 
 	for (auto neigh : pVertexBegin->NeighbourList())
 	{
-		if (!(*pWrappers)[pWrappers->indexOf(pVertexBegin)].SetDepth(nDepth).Failure())
+		if (!(*pWrappers)[pVertexBegin].SetDepth(nDepth).Failure())
 			result = FindPath(pWrappers, neigh, pVertexEnd, nDepth + 1);
 
 		if (result != nullptr)
@@ -277,54 +290,20 @@ CVertexList* CGraph::FindPath(CWrappedVertexList *pWrappers, CVertex *pVertexBeg
 	return result;
 }
 
-CVertexList* CGraph::FindSPath(CWrappedVertexList *pWrappers, CVertex *pVertexBegin, CVertex *pVertexEnd, int nDepth) const
+CVertexList* CGraph::FindSPath(CVertex *pVertexBegin, CVertex *pVertexEnd) const
 {
+	CWrappedVertexList *pWrappers = new CWrappedVertexList(GetVertexList());
+
 	if (pWrappers == nullptr)
 		return nullptr;
 
-	if (pVertexEnd == pVertexBegin)
-	{
-		CVertexList *pVertexList = new CVertexList;
-		pVertexList->push_front(pVertexEnd);
+	Valualize(pWrappers, pVertexBegin, pVertexEnd);
 
-		return pVertexList;
-	}
-
-	std::list<CVertexList *> result;
-	CVertexList *res = nullptr;
-	int minDepth = INT_MAX;
-
-	for (auto neigh : pVertexBegin->NeighbourList())
-	{
-		CVertexWrapper &cWrapper = (*pWrappers)[pWrappers->indexOf(pVertexBegin)];
-		CVertexList *pResult = nullptr;
-
-		if (!cWrapper.SetDepth(nDepth).Failure())
-			pResult = FindSPath(pWrappers, neigh, pVertexEnd, nDepth + 1);
-
-		if (pResult != nullptr)
-			result.push_back(pResult);
-	}
-
-	for (std::list<CVertexList *>::const_iterator it = result.cbegin(); it != result.cend(); ++it)
-	{
-		if ((*it)->size() < minDepth)
-		{
-			delete res;
-			res = *it;
-			minDepth = (int)res->size();
-		}
-		else
-		{
-			delete *it;
-		}
-	}
-
-	if(res != nullptr)
-		res->push_front(pVertexBegin);
-
+	CVertexList* res = FindSource(pWrappers, pVertexBegin, pVertexEnd);
+	delete pWrappers;
 	return res;
 }
+
 
 CResult CGraph::FindVertex(CVertex *pVertex) const
 {
@@ -471,7 +450,7 @@ CResult CGraph::LoadXML(std::ifstream &fIFile)
 			throw CError(CString("Cannot generate graph name"), EXCEPT_PATH);
 
 	CXMLTree *pNode = dynamic_cast<CXMLTree *>(pTree->GetFirstChild());
-			
+
 	while(pNode != nullptr)
 	{
 		if (pNode->GetName().ToLower() == "vertex")
@@ -489,7 +468,7 @@ CResult CGraph::LoadXML(std::ifstream &fIFile)
 CResult CGraph::LoadFromCommand(std::ifstream &fIFile)
 {
 	// TODO: Not implemented yet
-	
+
 	return CResult::Success;
 }
 
@@ -551,6 +530,57 @@ CResult CGraph::LoadFromUserType(std::ifstream &fIFile)
 	return CResult::Success;
 }
 
+void CGraph::Valualize(CWrappedVertexList * pWrapper, CVertex * pSource, CVertex * pTarget) const
+{
+	std::queue<CVertex *> queue;
+	(*pWrapper)[pSource].SetDepth(0);
+	unsigned nDepth = 1;
+	queue.push(pSource);
+
+	while (!queue.empty())
+	{
+		CVertex * pVertex = queue.front();
+		queue.pop();
+
+		for (auto vertex : pVertex->NeighbourList())
+		{
+			if((*pWrapper)[vertex].SetDepth((*pWrapper)[pVertex].GetDepth() + 1))
+				queue.push(vertex);
+
+			if (vertex == pTarget)
+				return;
+		}
+	}
+}
+
+CVertexList * CGraph::FindSource(CWrappedVertexList * pWrapper, CVertex * pSource, CVertex * pTarget) const
+{
+	if (pTarget == pSource)
+	{
+		CVertexList * result = new CVertexList();
+		result->push_back(pTarget);
+		return result;
+	}
+
+	for (auto vertex : pTarget->NeighbourList())
+	{
+		if ((*pWrapper)[pTarget].GetDepth() == (*pWrapper)[vertex].GetDepth() + 1)
+		{
+			CVertexList * res = FindSource(pWrapper, pSource, vertex);
+
+			if (res != nullptr)
+			{
+				res->push_back(pTarget);
+				return res;
+			}
+			else
+				return nullptr;
+		}
+	}
+	
+	return nullptr;
+}
+
 CWrappedVertexList::CWrappedVertexList(CVertexList const& lstVertices)
 {
 	for (auto it : lstVertices)
@@ -572,7 +602,7 @@ int CWrappedVertexList::indexOf(CVertex *pVertex)
 	return -1;
 }
 
-CVertexWrapper& CWrappedVertexList::operator[](unsigned nIndex)
+CVertexWrapper& CWrappedVertexList::operator [] (unsigned nIndex)
 {
 	int i = 0;
 	iterator it = begin();
@@ -679,7 +709,7 @@ CResult CEdgeList::AddEdge(CEdge *const pEdge)
 {
 	if (std::find(cbegin(), cend(), pEdge) != cend())
 		return CResult::EResultType(CResult::Fail | CResult::Already);
-	
+
 	push_back(pEdge);
 
 	return CResult::Success;
@@ -719,7 +749,7 @@ CResult CVertex::RemoveNeighbour(CVertex *pNeighbour)
 
 CResult CVertexWrapper::SetDepth(unsigned nValue)
 {
-	if (m_nValue < nValue)
+	if (m_nValue <= nValue)
 		return CResult::Fail;
 
 	m_nValue = nValue;
@@ -759,7 +789,7 @@ CResult CGraph::SSignature::operator << (std::istream &strm)
 
 	if (temp != "FILETYPE:")
 		return CResult::Fail;
-	
+
 	strm >> temp;
 	m_strFileType = temp;
 	strm >> temp;
@@ -798,4 +828,15 @@ CXEdge::CXEdge(std::string strName, CVertex * pVertex1, CVertex * pVertex2)
 CXEdge::~CXEdge()
 {
 	CResult result1 = m_pVertex1->RemoveNeighbour(m_pVertex2);
+}
+
+void Concate(CVertexList & lDest, CVertexList const & lSource, bool bRemove = true)
+{
+	if (bRemove && lDest.back() == lSource.front())
+		lDest.pop_back();
+
+	for (CVertexList::const_iterator it = lSource.cbegin(); it != lSource.cend(); ++it)
+	{
+		lDest.push_back(*it);
+	}
 }
